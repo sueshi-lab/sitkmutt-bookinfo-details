@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookinfo-dev-details
-  namespace: student23-bookinfo-dev
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.details.namespace }}
   labels:
-    app: bookinfo-dev-details
+    app: {{ .Release.Name }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.details.replicas }}
   selector:
     matchLabels:
-      app: bookinfo-dev-details
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: bookinfo-dev-details
+        app: {{ .Release.Name }}
     spec:
       containers:
-      - name: bookinfo-dev-details
-        image: ghcr.io/sueshi-lab/bookinfo-details:dev
+      - name: {{ .Release.Name }}
+        image: {{ .Values.details.image}}:{{ .Values.details.tag }}
         imagePullPolicy: Always
       imagePullSecrets:
-      - name: registry-bookinfo
+      - name: {{ .Values.details.imagePullSecrets }}

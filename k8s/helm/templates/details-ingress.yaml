@@ -1,11 +1,14 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  {{- if .Values.ingress.annotations }}
   annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-  name: bookinfo-dev-details
-  namespace: student23-bookinfo-dev
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.details.namespace }}
 spec:
   rules:
   - host: sitkmutt.bookinfo.dev.opsta.net
@@ -15,6 +18,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: bookinfo-dev-details
+            name: {{ .Release.Name }}
             port:
               number: 8081
