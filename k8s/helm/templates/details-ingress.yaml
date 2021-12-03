@@ -11,13 +11,13 @@ metadata:
   namespace: {{ .Values.details.namespace }}
 spec:
   rules:
-  - host: sitkmutt.bookinfo.dev.opsta.net
+  - host: {{ .Values.ingress.host }}
     http:
       paths:
-      - path: /student23/details(/|$)(.*)
+      - path: {{ .Values.ingress.path }}
         pathType: Prefix
         backend:
           service:
             name: {{ .Release.Name }}
             port:
-              number: 8081
+              number: {{ .Values.details.port }}

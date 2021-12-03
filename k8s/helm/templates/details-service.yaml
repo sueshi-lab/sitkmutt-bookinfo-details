@@ -6,6 +6,6 @@ metadata:
 spec:
   type: {{ .Values.ingress.serviceType }}
   ports:
-  - port: 8081
+  - port: {{ .Values.details.port }}
   selector:
     app: {{ .Release.Name }}
